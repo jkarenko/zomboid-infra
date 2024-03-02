@@ -23,12 +23,7 @@ instance = ec2.Instance('zomboidServer',
     vpc_security_group_ids=[sec_group.id],
     ami='ami-00381a880aa48c6c6', # Replace with a valid Project Zomboid-compatible AMI in your region
     key_name='zomboid',
-    user_data="""#!/bin/bash
-                echo 'Downloading steamcmd...'
-                mkdir -p /opt/steam
-                cd /opt/steam
-                curl -sqL 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz' | tar zxvf -
-                """)
+)
 
 eip = ec2.Eip.get('zomboid server', 'eipalloc-03bc9778dab836abe')
 eip_association = ec2.EipAssociation('eipAssoc', instance_id=instance.id, public_ip=eip.public_ip)
